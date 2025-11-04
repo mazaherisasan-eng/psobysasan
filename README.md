@@ -7,7 +7,9 @@ Particle Swarm Optimization (PSO) metaheuristic along with a demo script.
 
 - `pso_optimize.m` – Generic PSO solver for bound-constrained optimization
   problems. Configure the algorithm through the `options` structure to control
-  swarm size, coefficients, inertia damping, and convergence tolerance.
+  swarm size, coefficients, inertia damping, convergence tolerance, velocity
+  limits, and whether the objective function can be evaluated in a vectorized
+  fashion for additional speed.
 - `run_pso_example.m` – Example script that minimizes the 5D Rastrigin
   benchmark function using the optimizer and plots the convergence history.
 
@@ -34,5 +36,10 @@ Particle Swarm Optimization (PSO) metaheuristic along with a demo script.
    [bestPos, bestVal] = pso_optimize(myObjective, dimension, bounds, opts);
    ```
 
-Feel free to adjust the coefficients and tolerances in the options structure to
+Commonly tuned options include `swarmSize`, `cognitiveCoeff`, `socialCoeff`,
+`inertiaWeight`, and `tolerance`. For expensive objective functions that can
+operate on many particles at once, set `vectorizedObjective` to `true` and
+implement your objective to accept an `N`-by-`DIM` matrix of particles and
+return an `N`-by-1 vector of objective values to reduce function call
+overheads. Adjust the coefficients and tolerances in the options structure to
 match your specific optimization problem.
